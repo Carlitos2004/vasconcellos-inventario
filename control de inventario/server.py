@@ -6,16 +6,22 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import sqlite3
+import os
 
 app = Flask(__name__)
 CORS(app)
 
 # ============================================================
-# CONEXIÓN A SQLITE
+# CONEXIÓN A SQLITE (SIEMPRE USA LA RUTA CORRECTA)
 # ============================================================
 
+# Ruta absoluta al archivo inventario.db dentro de la carpeta actual
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DB_PATH = os.path.join(BASE_DIR, "inventario.db")
+
 def get_db():
-    return sqlite3.connect("inventario.db", check_same_thread=False)
+    return sqlite3.connect(DB_PATH, check_same_thread=False)
+
 
 # Crear tablas
 def init_db():
