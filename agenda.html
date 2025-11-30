@@ -1,0 +1,209 @@
+{% extends "base.html" %}
+{% block title %}Reserva Premium - Vasconcellos{% endblock %}
+{% block content %}
+
+<!-- Fondo con desenfoque suave -->
+<div class="agenda-bg">
+    <div class="agenda-container">
+        
+        <!-- Encabezado de la tarjeta -->
+        <div class="agenda-header">
+            <span class="badge-top">RESERVA ONLINE</span>
+            <h1>CONFIGURA TU CITA</h1>
+            <p>Elige el tratamiento perfecto. Nosotros hacemos el resto.</p>
+        </div>
+
+        <!-- Formulario Principal -->
+        <form method="POST" class="agenda-form">
+            
+            <!-- Grid de 2 columnas para datos personales -->
+            <div class="form-row">
+                <div class="input-box">
+                    <label>Nombre del Cliente</label>
+                    <div class="field-wrap">
+                        <i class="fas fa-user"></i>
+                        <input type="text" name="name" placeholder="Tu nombre" required>
+                    </div>
+                </div>
+
+                <div class="input-box">
+                    <label>Contacto</label>
+                    <div class="field-wrap">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" name="email" placeholder="correo@ejemplo.com" required>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Servicio (Ancho completo) -->
+            <div class="input-box full-width">
+                <label>Selecciona el Servicio</label>
+                <div class="field-wrap select-wrap">
+                    <i class="fas fa-layer-group"></i>
+                    <select name="service" required>
+                        <option value="" disabled selected>¿Qué necesita tu auto?</option>
+                        <option value="Lavado Detallado">✨ Lavado Detallado Premium</option>
+                        <option value="Pulido Pintura">🛡️ Corrección de Pintura (Pulido)</option>
+                        <option value="Ceramico 9H">💎 Tratamiento Cerámico 9H</option>
+                        <option value="Interior Full">💺 Detailing Interior Profundo</option>
+                    </select>
+                    <i class="fas fa-chevron-down arrow"></i>
+                </div>
+            </div>
+
+            <!-- Fecha (Ancho completo) -->
+            <div class="input-box full-width">
+                <label>Fecha de Ingreso</label>
+                <div class="field-wrap">
+                    <i class="far fa-calendar-alt"></i>
+                    <input type="date" name="date" id="dateInput" required>
+                </div>
+            </div>
+
+            <!-- Botón de Acción -->
+            <button type="submit" class="btn-agenda">
+                CONFIRMAR RESERVA
+                <i class="fas fa-long-arrow-alt-right"></i>
+            </button>
+
+        </form>
+
+        <!-- Pie de tarjeta con garantías -->
+        <div class="agenda-footer-info">
+            <span><i class="fas fa-check"></i> Garantía Oficial</span>
+            <span><i class="fas fa-lock"></i> Pago Seguro en Local</span>
+        </div>
+
+    </div>
+</div>
+
+<!-- Estilos encapsulados para diseño "Clean Sport" -->
+<style>
+    /* Fondo General */
+    .agenda-bg {
+        min-height: 100vh;
+        background: 
+            linear-gradient(to bottom, rgba(0,0,0,0.8), rgba(0,0,0,0.95)),
+            url('https://images.unsplash.com/photo-1601362840469-51e4d8d58785?auto=format&fit=crop&w=1920&q=80');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 120px 20px 60px; /* Espacio para header */
+        margin-top: -80px;
+    }
+
+    /* Tarjeta Central */
+    .agenda-container {
+        width: 100%;
+        max-width: 600px;
+        background: #0f0f0f;
+        border: 1px solid #222;
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+        position: relative;
+        overflow: hidden;
+        animation: slideUp 0.6s ease-out;
+    }
+
+    /* Decoración Borde Superior */
+    .agenda-container::before {
+        content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px;
+        background: var(--accent-red);
+    }
+
+    /* Header */
+    .agenda-header { text-align: center; margin-bottom: 35px; }
+    .badge-top { 
+        background: rgba(255, 0, 0, 0.1); color: var(--accent-red); 
+        font-size: 0.75rem; font-weight: 800; padding: 4px 10px; border-radius: 20px; 
+        letter-spacing: 1px; text-transform: uppercase; border: 1px solid rgba(255,0,0,0.2);
+    }
+    .agenda-header h1 { 
+        font-size: 2.2rem; color: #fff; margin: 15px 0 5px; font-weight: 800; letter-spacing: -0.5px;
+    }
+    .agenda-header p { color: #888; font-size: 1rem; margin: 0; }
+
+    /* Formulario */
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+    .input-box { display: flex; flex-direction: column; gap: 8px; }
+    .full-width { grid-column: 1 / -1; margin-bottom: 20px; }
+
+    label { color: #aaa; font-size: 0.85rem; font-weight: 600; margin-left: 5px; }
+
+    .field-wrap {
+        position: relative; display: flex; align-items: center;
+        background: #151515; border: 1px solid #333; border-radius: 8px;
+        transition: 0.3s ease;
+    }
+    
+    .field-wrap:focus-within {
+        border-color: var(--accent-red);
+        box-shadow: 0 0 0 4px rgba(255, 0, 0, 0.1);
+        background: #1a1a1a;
+    }
+
+    .field-wrap i { 
+        position: absolute; left: 15px; color: #666; font-size: 1rem; pointer-events: none;
+        transition: 0.3s;
+    }
+    .field-wrap:focus-within i { color: #fff; }
+
+    .field-wrap input, .field-wrap select {
+        width: 100%; background: transparent; border: none; color: #fff;
+        padding: 14px 14px 14px 45px; font-size: 1rem; font-family: 'Outfit', sans-serif;
+        outline: none; appearance: none;
+    }
+    
+    .arrow { left: auto !important; right: 15px; color: #444 !important; }
+
+    /* Botón */
+    .btn-agenda {
+        width: 100%; background: var(--accent-red); color: #fff;
+        border: none; padding: 16px; border-radius: 8px;
+        font-size: 1.1rem; font-weight: 700; letter-spacing: 0.5px;
+        cursor: pointer; transition: 0.3s; display: flex; justify-content: center; align-items: center; gap: 10px;
+        margin-top: 10px; text-transform: uppercase;
+    }
+    .btn-agenda:hover { 
+        background: #cc0000; transform: translateY(-2px); 
+        box-shadow: 0 10px 25px rgba(255, 0, 0, 0.3);
+    }
+
+    /* Footer Info */
+    .agenda-footer-info {
+        margin-top: 30px; padding-top: 20px; border-top: 1px solid #222;
+        display: flex; justify-content: center; gap: 30px;
+    }
+    .agenda-footer-info span { color: #555; font-size: 0.85rem; display: flex; align-items: center; gap: 8px; }
+    .agenda-footer-info i { color: var(--accent-red); }
+
+    /* Date Picker Dark Mode */
+    input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(1); opacity: 0.5; cursor: pointer; }
+
+    /* Animación */
+    @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Responsive */
+    @media(max-width: 600px) {
+        .form-row { grid-template-columns: 1fr; gap: 0; }
+        .input-box { margin-bottom: 20px; }
+        .agenda-container { padding: 30px 20px; }
+        .agenda-header h1 { font-size: 1.8rem; }
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Fecha mínima hoy
+        const dateInput = document.getElementById('dateInput');
+        if(dateInput) {
+            dateInput.min = new Date().toISOString().split('T')[0];
+        }
+    });
+</script>
+
+{% endblock %}

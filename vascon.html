@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vasconcellos Automotriz - Panel de Gestión</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='vascon.css') }}">
+</head>
+<body class="antialiased">
+    
+    <div class="main-container">
+        <header class="app-header">
+            <div class="flex items-center gap-4">
+                 <div class="logo-container">
+                    <img src="{{ url_for('static', filename='vasconcellos.png') }}" alt="Vasconcellos Automotriz Logo">
+                 </div>
+                 <div>
+                    <h1 class="app-title">
+                      <span class="font-light">Vasconcellos</span><br>Automotriz
+                    </h1>
+                 </div>
+            </div>
+             <div class="view-switcher">
+                <button id="view-admin-btn" class="view-switcher-btn active">Administrador</button>
+                <button id="view-client-btn" class="view-switcher-btn">Tienda</button>
+            </div>
+        </header>
+
+        <main id="app-content" class="app-content">
+            <p>Cargando...</p>
+        </main>
+    </div>
+
+    <div id="overlays-container"></div>
+    <div id="toast-container"></div>
+
+    <script src="{{ url_for('static', filename='vascon.js') }}"></script>
+</body>
+</html>
