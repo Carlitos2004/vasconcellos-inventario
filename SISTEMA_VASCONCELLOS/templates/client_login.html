@@ -1,39 +1,59 @@
 {% extends "base.html" %}
-{% block title %}Acceso Piloto - Vasconcellos{% endblock %}
+{% block title %}Registro - Vasconcellos{% endblock %}
 {% block content %}
 
 <div class="auth-wrapper">
     <div class="auth-card">
         <div class="auth-header">
-            <i class="fas fa-user-circle" style="font-size: 3rem; color: #fff; margin-bottom: 15px;"></i>
-            <h2>ACCESO PILOTO</h2>
-            <p>Ingresa a tu cuenta para gestionar tus citas.</p>
+            <i class="fas fa-id-card" style="font-size: 3rem; color: #fff; margin-bottom: 15px;"></i>
+            <h2>NUEVO CLIENTE</h2>
+            <p>Únete al club Vasconcellos.</p>
         </div>
 
+        <!-- MENSAJES FLASH -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div style="margin: 15px 0;">
+                {% for category, msg in messages %}
+                    <div style="padding:8px 12px; border-radius:6px;
+                                font-size:0.85rem; margin-bottom:6px;
+                                {% if category == 'success' %}background:#123c1f; color:#b6f7c8; border:1px solid #1f7a33;
+                                {% else %}background:#3c1111; color:#f7b6b6; border:1px solid #7a1f1f;{% endif %}">
+                        {{ msg }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% endwith %}
+
         <form method="POST" class="auth-form">
+            <div class="form-group">
+                <label><i class="fas fa-user"></i> Nombre Completo</label>
+                <input type="text" name="name" class="input-field" placeholder="Tu Nombre" required>
+            </div>
+
             <div class="form-group">
                 <label><i class="fas fa-envelope"></i> Email</label>
                 <input type="email" name="email" class="input-field" placeholder="tu@email.com" required>
             </div>
             
             <div class="form-group">
-                <label><i class="fas fa-lock"></i> Contraseña</label>
-                <input type="password" name="password" class="input-field" placeholder="••••••••" required>
+                <label><i class="fas fa-key"></i> Contraseña</label>
+                <input type="password" name="password" class="input-field" placeholder="Crea una contraseña segura" required>
             </div>
 
             <button type="submit" class="btn btn-primary w-full" style="margin-top: 10px;">
-                INICIAR MOTOR <i class="fas fa-tachometer-alt"></i>
+                CREAR CUENTA <i class="fas fa-check"></i>
             </button>
         </form>
 
         <div class="auth-footer">
-            <p>¿Nuevo aquí? <a href="{{ url_for('client_register') }}" class="link-accent">Crear una cuenta</a></p>
+            <p>¿Ya tienes cuenta? <a href="{{ url_for('client_login') }}" class="link-accent">Iniciar Sesión</a></p>
         </div>
     </div>
 </div>
 
 <style>
-/* Estilos encapsulados para Auth */
 .auth-wrapper {
     min-height: 80vh; display: flex; align-items: center; justify-content: center;
     background: radial-gradient(circle at center, #1a1a1a 0%, #000 100%);

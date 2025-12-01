@@ -1111,5 +1111,3 @@ document.addEventListener("DOMContentLoaded", async () => {
   await cargarCategorias();
   mostrarDashboard();
 });
-
-

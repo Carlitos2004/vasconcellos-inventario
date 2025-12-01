@@ -10,6 +10,22 @@
             <p>Únete al club Vasconcellos.</p>
         </div>
 
+        <!-- MENSAJES FLASH -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div style="margin: 15px 0;">
+                {% for category, msg in messages %}
+                    <div style="padding:8px 12px; border-radius:6px;
+                                font-size:0.85rem; margin-bottom:6px;
+                                {% if category == 'success' %}background:#123c1f; color:#b6f7c8; border:1px solid #1f7a33;
+                                {% else %}background:#3c1111; color:#f7b6b6; border:1px solid #7a1f1f;{% endif %}">
+                        {{ msg }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% endwith %}
+
         <form method="POST" class="auth-form">
             <div class="form-group">
                 <label><i class="fas fa-user"></i> Nombre Completo</label>
@@ -37,7 +53,6 @@
     </div>
 </div>
 
-<!-- Reutilizamos los estilos del login -->
 <style>
 .auth-wrapper {
     min-height: 80vh; display: flex; align-items: center; justify-content: center;
