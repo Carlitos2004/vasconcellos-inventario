@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+{% block title %}Mi Panel - Vasconcellos{% endblock %}
+{% block content %}
+
+<div class="portal-wrapper">
+    <div class="portal-card">
+        <div class="portal-header">
+            <h2>Bienvenido, {{ session.client_name }}</h2>
+            <p>Estas son tus citas registradas.</p>
+            <a href="{{ url_for('logout') }}" class="logout-btn">
+                <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+            </a>
+        </div>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div style="margin: 15px 0;">
+                {% for category, msg in messages %}
+                    <div style="padding:8px 12px; border-radius:6px;
+                                font-size:0.85rem; margin-bottom:6px;
+                                {% if category == 'success' %}background:#123c1f; color:#b6f7c8; border:1px solid #1f7a33;
+                                {% else %}background:#3c1111; color:#f7b6b6; border:1px solid #7a1f1f;{% endif %}">
+                        {{ msg }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% endwith %}
+
+        {% if appointments %}
+            <table class="portal-table">
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Servicio</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for appt in appointments %}
+                    <tr>
+                        <td>{{ appt.date }}</td>
+                        <td>{{ appt.service }}</td>
+                        <td>
+                            {% if appt.status == 'Pendiente' %}
+                                <span class="status pending">{{ appt.status }}</span>
+                            {% elif appt.status == 'Completado' %}
+                                <span class="status done">{{ appt.status }}</span>
+                            {% else %}
+                                <span class="status other">{{ appt.status }}</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p style="color:#ccc; margin-top:20px;">Aún no tienes citas registradas.</p>
+        {% endif %}
+    </div>
+</div>
+
+<style>
+.portal-wrapper {
+    min-height: 85vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: radial-gradient(circle at center, #111 0%, #000 100%);
+    padding: 40px;
+}
+.portal-card {
+    width: 100%;
+    max-width: 800px;
+    background: rgba(15,15,15,0.9);
+    border: 1px solid #333;
+    border-radius: 12px;
+    padding: 40px;
+    box-shadow: 0 0 50px rgba(0,0,0,0.8);
+}
+.portal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #222;
+    padding-bottom: 15px;
+}
+.portal-header h2 {
+    color: #fff;
+    font-weight: 800;
+    font-size: 1.6rem;
+    margin: 0;
+}
+.portal-header p {
+    color: #999;
+    font-size: 0.9rem;
+    margin: 0;
+    flex: 1 0 100%;
+}
+.logout-btn {
+    background: #7a1f1f;
+    color: #fff;
+    padding: 8px 14px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: 0.2s;
+}
+.logout-btn:hover {
+    background: #a42525;
+}
+.portal-table {
+    width: 100%;
+    border-collapse: collapse;
+    color: #ddd;
+    font-size: 0.95rem;
+}
+.portal-table th, .portal-table td {
+    border-bottom: 1px solid #333;
+    padding: 10px 12px;
+    text-align: left;
+}
+.portal-table th {
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+}
+.status {
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.status.pending {
+    background: #332c05;
+    color: #ffce2e;
+}
+.status.done {
+    background: #06320c;
+    color: #7ef593;
+}
+.status.other {
+    background: #2c0f0f;
+    color: #f57c7c;
+}
+</style>
+
+{% endblock %}

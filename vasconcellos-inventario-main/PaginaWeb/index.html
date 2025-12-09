@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Vasconcellos Automotriz — Inventario</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body class="tema-azul">
+  <!-- ============================================================
+       SIDEBAR
+  ============================================================ -->
+  <aside class="sidebar">
+    <h2 class="logo">🚗 Vasconcellos</h2>
+
+    <div class="menu-item" onclick="clickInventario()">
+      Inventario
+      <span class="arrow" id="arrow-inv">▸</span>
+    </div>
+
+    <div class="submenu" id="submenu-inventario"></div>
+
+    <div class="menu-item" onclick="mostrarVentas()">
+      Ventas
+      <span class="arrow">▸</span>
+    </div>
+
+    <div class="menu-item" onclick="mostrarCompras()">
+      Compras
+      <span class="arrow">▸</span>
+    </div>
+
+    <div class="menu-item" onclick="mostrarLavados()">
+      Lavados / Servicios
+      <span class="arrow">▸</span>
+    </div>
+
+    <div class="menu-item" onclick="mostrarMovimientos()">
+      Movimientos
+      <span class="arrow">▸</span>
+    </div>
+
+    <div class="menu-item" onclick="mostrarAjustes()">
+      Ajustes
+      <span class="arrow">⚙️</span>
+    </div>
+  </aside>
+
+  <!-- ============================================================
+       CONTENIDO PRINCIPAL
+  ============================================================ -->
+  <main class="main">
+
+    <!-- ============================================================
+         DASHBOARD (INVENTARIO COMPLETO)
+    ============================================================ -->
+    <section id="dashboard" class="content">
+
+      <h2>Inventario</h2>
+
+      <!-- Buscador + botón agregar -->
+      <div class="fila-buscador">
+        <input
+          type="text"
+          id="buscador"
+          placeholder="Buscar producto..."
+          onkeyup="buscarProducto()"
+        />
+
+        <button class="btn-agregar" onclick="abrirAgregarProducto()">
+          ➕ Agregar Producto
+        </button>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Producto</th>
+            <th>Categoría</th>
+            <th>Stock</th>
+            <th>Precio</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="tablaProductos"></tbody>
+      </table>
+    </section>
+
+    <!-- ============================================================
+         VENTAS
+    ============================================================ -->
+    <section id="ventas" class="content">
+
+      <h2>Ventas</h2>
+
+      <div class="form-grid">
+        <div>
+          <label>Categoría</label>
+          <select id="ventaCategoria" onchange="filtrarProductosVenta()"></select>
+        </div>
+
+        <div>
+          <label>Producto</label>
+          <select id="ventaProducto" onchange="actualizarPrecioYTotal()"></select>
+        </div>
+
+        <div>
+          <label>Cantidad</label>
+          <input type="number" id="ventaCantidad" value="1" oninput="actualizarPrecioYTotal()" />
+        </div>
+
+        <div>
+          <label>Precio</label>
+          <input type="text" id="ventaPrecio" disabled />
+        </div>
+
+        <div>
+          <label>Total</label>
+          <input type="text" id="ventaTotal" disabled />
+        </div>
+
+        <button class="btn-primary" onclick="registrarVenta()">Registrar Venta</button>
+      </div>
+
+      <div id="ventasMeses"></div>
+    </section>
+
+    <!-- ============================================================
+         COMPRAS
+    ============================================================ -->
+    <section id="compras" class="content">
+
+      <h2>Compras</h2>
+
+      <div class="form-grid">
+        <div>
+          <label>Categoría</label>
+          <select id="compraCategoria" onchange="filtrarProductosCompra()"></select>
+        </div>
+
+        <div>
+          <label>Producto</label>
+          <select id="compraProducto" onchange="actualizarTotalCompra()"></select>
+        </div>
+
+        <div>
+          <label>Cantidad</label>
+          <input type="number" id="compraCantidad" value="1" oninput="actualizarTotalCompra()" />
+        </div>
+
+        <div>
+          <label>Precio compra</label>
+          <input type="number" id="compraPrecio" value="0" oninput="actualizarTotalCompra()" />
+        </div>
+
+        <div>
+          <label>Total</label>
+          <input type="text" id="compraTotal" disabled />
+        </div>
+
+        <button class="btn-primary" onclick="registrarCompra()">Registrar Compra</button>
+      </div>
+
+      <div id="comprasMeses"></div>
+    </section>
+
+    <!-- ============================================================
+         LAVADOS / SERVICIOS
+    ============================================================ -->
+    <section id="lavados" class="content">
+
+      <h2>Lavados / Servicios</h2>
+
+      <div class="form-grid">
+        <div>
+          <label>Tipo de servicio</label>
+          <input type="text" id="lavadoTipo" placeholder="Ej: Lavado full" />
+        </div>
+
+        <div>
+          <label>Detalles</label>
+          <input type="text" id="lavadoDetalles" />
+        </div>
+
+        <div>
+          <label>Precio</label>
+          <input type="number" id="lavadoPrecio" value="0" />
+        </div>
+
+        <button class="btn-primary" onclick="registrarLavado()">Registrar Servicio</button>
+      </div>
+
+      <h3>Servicios de hoy</h3>
+      <div id="lavadosHoy"></div>
+    </section>
+
+    <!-- ============================================================
+         MOVIMIENTOS (MITAD MITAD)
+    ============================================================ -->
+    <section id="movimientos" class="content">
+      <h2>Movimientos</h2>
+      <div id="tablaMovimientos"></div>
+    </section>
+
+    <!-- ============================================================
+         AJUSTES
+    ============================================================ -->
+    <section id="ajustes" class="content">
+      <h2>Ajustes</h2>
+
+      <label for="temaSelect">Tema visual</label>
+      <select id="temaSelect" onchange="cambiarTema()">
+        <option value="azul">Azul</option>
+        <option value="verde">Verde</option>
+        <option value="rojo">Rojo</option>
+        <option value="morado">Morado</option>
+      </select>
+
+      <button class="btn-primary" onclick="restaurarTema()">Restaurar tema</button>
+    </section>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
